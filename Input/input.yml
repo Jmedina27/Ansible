@@ -1,0 +1,48 @@
+---
+
+- name: Practice with inputs using playbooks
+  hosts: local
+  gather_facts: True
+  ignore_errors: True
+  vars_prompt:
+          - name: "grp_name"
+            prompt: "Enter name of the group"
+            private: no
+
+          - name: "host_name"
+            prompt: "Give the ip a name"
+            private: no
+
+          - name: "host_ip"
+            prompt: "Enter the host ip address"
+            private: no
+
+          - name: "pkg_list"
+            prompt: "how many packages do you want to install?"
+            private: no
+
+          - name: "pkg_name"
+            prompt: "What package do you want to update; ?" 
+            private: no
+            with_sequence: count={{ pkg_list | int }}
+            
+  tasks:
+          - name: Installing desired packages
+            homebrew:
+                   name: '{{ pkg_name }}'
+                   state: present
+            with_sequence: count={{ pkg_list | int }}
+
+          - name: Add a new host and group
+            become: True
+            lineinfile:
+                    path: /etc/ansible/Input/hosts2
+                    line: "[{{ grp_name }}]"
+                    insertafter: EOF
+
+          - name: Add host ip to group
+            become: True
+            lineinfile:
+                    path: /etc/ansible/Input/hosts2
+                    line: "{{ host_name }} ansible_ssh_connection={{host_ip}}"
+                    insertafter: '{{ grp_name }}'

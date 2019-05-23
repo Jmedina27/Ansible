@@ -1,0 +1,21 @@
+---
+- name: using vars_pronpt
+  hosts: localhost
+  gather_facts: true
+  vars_prompt:
+          - name: pkg
+            prompt: "What package do you want to install"
+            private: no
+            #tasks:
+            # - name: install pronpted package
+            #homebrew:
+            #      name: "{{ pkg }}"
+            #       state: present
+            #register: pkg_task
+            
+            # - name: debug pkg_task
+            #debug:
+            #       msg: pkg_task
+            #
+  roles:
+          - defaultPkg

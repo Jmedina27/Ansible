@@ -1,0 +1,65 @@
+---
+
+- name: Install packages on Fedora Machine and Update its OS
+  hosts: fedora
+  become: True
+  tasks:
+          - name: Install vim  on Fedora Machine
+            dnf:
+                    name: vim
+                    state: installed
+                    update_cache: True
+
+          - name: Install tree on Fedora Machine
+            dnf:
+                    name: tree
+                    state: installed
+                    update_cache: True
+
+          - name: Install yum on Fedora Machine
+            dnf:
+                    name: yum
+                    state: installed
+                    update_cache: True
+
+          - name: Install ansible on Fedora Machine
+            dnf:
+                    name: ansible
+                    state: installed
+                    update_cache: True
+
+          - name: Install whois on Fedora Machine
+            dnf:
+                    name: whois
+                    state: installed
+                    update_cache: True
+
+          - name: Update Fedora Machine
+            dnf:
+                    name: "*"
+                    state: latest
+            register: task_result
+
+          - name: Restart Fedora Machine
+            command: sleep 5 && reboot
+            async: 1
+            poll: 0
+            when: task_result.changed
+            register: boot_result
+
+          - name: wait for ten  seconds
+            pause:
+                    seconds: 10
+            when: boot_result.changed
+
+          - name: wait for system to reboot
+            wait_for_connection:
+                    delay: 50
+                    timeout: 100
+            when: boot_result.changed
+
+          - name: update yum
+            dnf:
+                    name: yum
+                    state: latest
+

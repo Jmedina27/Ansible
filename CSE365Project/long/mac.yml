@@ -1,0 +1,19 @@
+---
+
+- name: Install Packages on MacOSX Machine
+  hosts: localhost
+  tasks:
+          - name: install vim on macos machine
+            homebrew:
+                    name: vim
+                    state: latest
+
+          - name: install tree on macos machine
+            homebrew:
+                    name: tree
+                    state: latest
+
+          - name: install git on macos machine
+            homebrew:
+                    name: git
+                    state: latest

@@ -1,0 +1,130 @@
+---
+# tasks file for roles/demo
+
+#Install some packages on MacOSX by using the items that are defined in the packages variable
+          # Using homebrew packaging tool to install our packages and setting the state to installed
+          # since running homebrew commands as sudo is dangerous we want to make sure to set false to become
+          - name: Install Packages on MacOS Machine
+            homebrew: name={{ item }} state=latest
+            become: False
+            with_items: "{{ packages }}"
+            when: ansible_distribution == "MacOSX"
+
+            #Install packages on Ubuntu Machine using the items we defined in our packages variable
+            #Use the apt packaging tool to install the packages we want, after installation update our cache
+          - name: Install Packages on Ubuntu Machine
+            apt: pkg={{ item }} state=installed update_cache=True
+            with_items: "{{ packages }}"
+            when: ansible_distribution == "Ubuntu"
+
+            #update Ubuntu machine using the apt packaging tool
+            #register task_result to record if there were any new updates installed
+          - name: Update Ubuntu Machine
+            apt: upgrade=dist update_cache=True
+            when: ansible_distribution == "Ubuntu"
+            register: task_result
+
+            #restart our Ubuntu machine if task_result changed when we updated our machine
+            #sleep and reboot using the command line on the Ubuntu machine
+            #keep the connection
+          - name: Restart Ubuntu Machine If Any New Updates Were Installed
+            command: sleep 5 && reboot
+            async: 1
+            poll: 0
+            when:
+                    - ansible_distribution == "Ubuntu"
+                    - task_result.changed
+
+            #wait 10 seconds for Ubuntu machine to reboot
+          - name: Wait Ten Seconds on Ubuntu Machine
+            pause:
+                    seconds: 10
+            when:
+                    - ansible_distribution == "Ubuntu"
+                    - task_result.changed
+
+            #after the system is done rebooting wait for the connection to the Ubuntu machine is reachable
+          - name: Wait for System's connection to be Reachable
+            wait_for_connection:
+                    delay: 50
+                    timeout: 100
+            when:
+                    - ansible_distribution == "Ubuntu"
+                    - task_result.changed
+
+            #install packages on Fedora machine using the items we defined in our packages variable
+            #use our dnf packaging tool to install the packages on the Fedora machine and update cache
+          - name: Install Packages On Fedora Machine
+            dnf: name={{ item }} state=installed update_cache=True
+            with_items: "{{ packages }}"
+            when: ansible_distribution == "Fedora"
+
+            #update Fedora machine to the latest version
+            #register task_result to record if any new updates were installed on the machine
+          - name: Update Fedora Machine
+            package: name=* state=latest
+            when: ansible_distribution == "Fedora"
+            register: task_result
+
+            #restart machine if there task_result recorded any changes while updating the Fedora machine
+          - name: Restart Fedora Machine If Any New Updates Were Installed
+            command: sleep 5 && reboot
+            async: 1
+            poll: 0
+            when:
+                    - ansible_distribution == "Fedora"
+                    - task_result.changed
+
+          - name: Wait Ten Seconds on Fedora Machine
+            pause:
+                    seconds: 10
+            when:
+                    - ansible_distribution == "Fedora"
+                    - task_result.changed
+
+            #wait for Fedora machine to be reachable again
+          - name: Wait for Fedora  System to Reboot
+            wait_for_connection:
+                    delay: 50
+                    timeout: 100
+            when:
+                    - ansible_distribution == "Fedora"
+                    - task_result.changed
+
+            #Install Packages on CentOS Machine
+          - name: Install Packages on CentOS Machine
+            yum: name={{ item }} state=installed update_cache=True
+            with_items: "{{ packages }}"
+            when: ansible_distribution == "CentOS"
+
+            #Update the CentOS Machine to the latest version
+            #register task_result t record if any new updates were installed on the machine
+          - name: Update CentOS Machine
+            yum: name=* state=latest update_cache=True
+            when: ansible_distribution == "CentOS"
+            register: task_result
+
+            #Restart the CentOS Machine if the task_result has recorded any changes while updatign ther CentOS Machine
+          - name: Restart CentOS Machine If Any New Updates Were Installed
+            command: sleep 5 && reboot
+            async: 1
+            poll: 0
+            when:
+                    - ansible_distribution == "CentOS"
+                    - task_result.changed
+
+          - name: Wait Ten Seconds on CentOS Machine
+            pause:
+                    seconds: 10
+            when:
+                    - ansible_distribution == "CentOS"
+                    - task_result.changed
+
+          - name: Wait for CentOS Machine to Reboot
+            wait_for_connection:
+                    delay: 50
+                    timeout: 100
+            when:
+                    - ansible_distribution == "CentOS"
+                    - task_result.changed
+

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#Answer=$(zenity --entry --text "Who are You?" --entry-text "Tell me your name");
+#echo $Answer
+
+#if [ $Answer == "Les" ]; then
+	zenity --info --text "Welcome to Ansible"
+#else
+#	zenity --error --text "Who are you?"
+#fi
+
+opt1="Add a host"
+opt2="Check a connection"
+opt3="Install a package"
+opt4="option 4"
+opt5="option 5"
+opt6="Exit"
+int=`zenity --height=275 --list --radiolist --text 'What do you want to do?' --column 'Select...' --column 'Options' FALSE "$opt1" FALSE "$opt2" FALSE "$opt3" FALSE "$opt4" FALSE "$opt5" FALSE "$opt6"`
+
+if [ $int == opt1 ]; then
+	#echo $int
+	zenity --info --text "Welcome to Asnible"
+fi

@@ -1,0 +1,9 @@
+---
+# tasks file for roles/defaultPkg
+
+- name: install test input package 
+  homebrew:
+          name: "{{ packages }}"
+          state: installed
+
+

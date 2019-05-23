@@ -1,0 +1,6 @@
+---
+# vars file for roles/defaultPkg
+
+packages:
+        - "{{ pkg }}"
+

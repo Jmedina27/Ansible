@@ -1,0 +1,21 @@
+---
+# tasks file for roles/user
+
+- name: add user to  sudo group 
+  become: True
+  user:
+         name: "{{ item }}"
+         state: present
+         password: "{{ password }}"
+         groups: sudo 
+         system: no
+         createhome: yes
+  with_items: "{{ users }}"
+
+- name: add passwordless sudo to users
+  become: true
+  lineinfile: 
+         dest: "/etc/sudoers"
+         state: present
+         regexp: "^%sudo"
+         line: "%sudo ALL=(ALL) NOPASSWD:ALL"

@@ -1,0 +1,8 @@
+
+[name2]
+group ansible_ssh_connection=192.134.132.1
+[hdhd]
+hdhd ansible_ssh_connection=hdhd
+dhdhd ansible_ssh_connection=hdh
+[jdjdj]
+jjd ansible_ssh_connection=chd

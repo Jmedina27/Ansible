@@ -1,0 +1,34 @@
+[local]
+localhost ansible_connection=local
+
+[Ubuntu]
+ubuntu ansible_ssh_host=parallels@10.211.55.9
+ubuntu2 ansible_ssh_host=parallels@10.211.55.12
+
+[Fedora]
+fedora ansible_ssh_host=parallels@10.211.55.10
+
+[CentOS]
+centos ansible_ssh_host=parallels@10.211.55.11
+
+[Work]
+work ansible_ssh_host=alexmedina@10.216.254.87
+
+[School]
+school ansible_ssh_host=005172852@jbh3-1.cse.csusb.edu
+
+[Home]
+home ansible_ssh_host=jesusmedina@192.168.1.15
+
+[parallels]
+ubuntu
+ubuntu2
+centos
+fedora
+
+[demo]
+localhost
+ubuntu
+ubuntu2
+fedora
+centos

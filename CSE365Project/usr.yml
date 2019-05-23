@@ -1,0 +1,40 @@
+---
+
+- name: create test users in work
+  hosts: ubuntu
+  vars:
+          users:
+                  - test1
+                  - test2
+          password: $6$x1kaNZaXs44IA/PM$bEw9pPw.Kq1qhdYfgYBbneQNNk2qavR7VhNBFaxFvdtMTvmF4BhYhzgEBa1EhFyGyj22ulQwYh5SGKLtMr1T6/
+
+  tasks:
+          - name: add user to sudo group 
+            become: True
+            user:
+                    name: "{{ item }}"
+                    state: present
+                    password: "{{ password }}"                   
+                    groups: sudo
+            with_items: "{{ users }}"
+
+          - name: add passwordless sudo to users
+            become: True
+            lineinfile:
+                    dest: "/etc/sudoers"
+                    state: "present"
+                    regexp: "^%sudo"
+                    line: "%sudo ALL=(ALL) NOPASSWD: ALL"
+
+          - name: Delete inactive users
+            become: True
+            user:
+                     name: "{{ item }}"
+                     state: absent
+                     remove: yes
+            with_items: "{{ users }}"
+
+
+
+  pre_tasks:
+          - name: 

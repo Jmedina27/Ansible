@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  vars_prompt:
+          - name: packages
+            prompt: "Enter the packages you want to be updates to the latest version seperated by a comma"
+            private: no
+
+  vars:
+          package:
+                  - "{{ packages.split(',') }}"
+
+  tasks:
+          - name: update packages user desired
+            homebrew: name={{ item }} state=installed
+            with_items: "{{ package }}"
+            register: tasks_result
+
+          - name: debug 
+            debug: "{{ package }}"     

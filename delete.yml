@@ -1,0 +1,16 @@
+---
+
+- name: delete usr
+  hosts: ubuntu
+  vars:
+          users:
+                  - test1
+                  - test2
+  tasks:
+          - name: Delete inactive users
+            become: True
+            user:
+                     name: "{{ item }}"
+                     state: absent
+                     remove: yes
+            with_items: "{{ users }}"

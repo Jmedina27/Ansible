@@ -1,0 +1,49 @@
+---
+
+- name: Install packages on Ubuntu Machine and Update its OS
+  hosts: ubuntu
+  become: True
+  tasks:
+          - name: Install vim  on Ubuntu Machine
+            apt:
+                    name: vim
+                    state: installed
+                    update_cache: True
+
+          - name: Install tree on Ubuntu Machine
+            apt:
+                    name: tree
+                    state: absent
+                    update_cache: True
+
+          - name: Install yum on Ubuntu Machine
+            apt:
+                    name: yum
+                    state: installed
+                    update_cache: True
+
+          - name: Install software properties common on Ubuntu Machine
+            apt:
+                    name: software-properties-common
+                    state: installed
+                    update_cache: True
+
+          - name: Install ansible on Ubuntu Machine
+            apt:
+                    name: ansible
+                    state: installed
+                    update_cache: True
+
+          - name: Install whois on Ubuntu Machine
+            apt:
+                    name: whois
+                    state: absent
+                    update_cache: True
+
+          - name: Update all packages on Ubuntu Machine
+            apt:
+                    upgrade: dist
+                    update_cache: True
+
+            # - name: Restart Ubuntu Machine
+            #command: reboot

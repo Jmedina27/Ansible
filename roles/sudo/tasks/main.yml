@@ -1,0 +1,11 @@
+---
+# tasks file for roles/sudo
+
+
+- name: Enable passwordless sudo for user 'username'
+  lineinfile:
+          dest: "/etc/sudoers"
+          state: "present"
+          regexp: "^parallels"
+          line: "parallels ALL=(ALL) NOPASSWD:ALL"
+  when: ansible_distribution == "Fedora" or ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu"

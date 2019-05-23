@@ -1,0 +1,10 @@
+---
+- name: install python on Fedora machne
+  hosts: Ubuntu
+  become: True
+  tasks:
+          - name: install python
+            apt:
+                    name: vim
+                    state: installed
+

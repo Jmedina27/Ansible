@@ -1,0 +1,7 @@
+---
+- name: Using Ansible Roles to perform tasks on Multiple Machines
+  hosts: demo
+  gather_facts: True
+  become: True
+  roles:
+          - demo

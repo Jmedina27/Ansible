@@ -1,0 +1,7 @@
+---
+
+- name: upgrade
+  hosts: parallels
+  become: true
+  roles:
+          - upgrade

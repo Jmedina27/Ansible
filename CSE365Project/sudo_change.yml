@@ -1,0 +1,12 @@
+---
+- name: Enable Passwordless Sudo on Fedora and Ubuntu Machine
+  hosts: Ubuntu
+  become: True
+  tasks:
+          - name: change sudo password to nopasswd
+            lineinfile:
+                    dest: "/etc/sudoers"
+                    state: "present"
+                    regexp: "^parallels"
+                    line: "parallels ALL=(ALL) NOPASSWD:ALL"
+            when: ansible_distribution == "Fedora" or ansible_distribution == "Ubuntu" or ansible_distribution == "CentOS"

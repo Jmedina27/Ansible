@@ -1,0 +1,30 @@
+- hosts: demo
+  become: True
+  gather_facts: True
+  vars_prompt:
+          - name: package
+            prompt: "Enter the package you wish to install. (separate each package with a comma)"
+            private: no
+
+          - name: packages
+            prompt: "Select one of the following.\n1-Install Default Packages\n2-Install Desired Packages\n"
+            private: no
+            default: no
+
+          - name: file_directory
+            prompt: "Enter the path of the directory in which your file is stored"
+            private: no
+
+          - name: file
+            prompt: "What is the file name?"
+            private: no
+
+          - name: destination
+            prompt: "Enter the destination of where you want the path to be in"
+            private: no
+  roles:
+          #- install
+            #- update
+          #- copy
+          #- sudo
+          - user
