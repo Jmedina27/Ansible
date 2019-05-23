@@ -23,8 +23,8 @@
             prompt: "Enter the destination of where you want the path to be in"
             private: no
   roles:
-          #- install
-            #- update
-          #- copy
-          #- sudo
+          - install
+          - update
+          - copy
+          - sudo
           - user
