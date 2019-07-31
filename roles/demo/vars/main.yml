@@ -1,9 +1,0 @@
----
-# vars file for roles/demo
-
-packages:
-        - vim
-        - python
-        - tree
-        - git
-        - whois

@@ -1,0 +1,9 @@
+---
+
+- name: local to local
+  hosts: ubuntu2
+  tasks:
+          - copy:
+                  src: ~/Documents/SchoolLab
+                  dest: ~/Downloads
+                  remote_src: yes

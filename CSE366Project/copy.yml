@@ -1,22 +1,27 @@
 ---
 - name: Copy files from local to remote
-  hosts: Ubuntu
-  gather_facts: False
+  hosts: School
   vars_prompt:
-          - name: file
-            prompt: "Enter the path to the file you want to copy to your machines"
+          - name: file_directory
+            prompt: "Enter the path to the file"
             private: no
-          
-          - name: transfer
+
+          - name: file
+            prompt: "Enter the file name"
+            private: no
+
+          - name: destination
             prompt: "Where do you want this file to be located in your servers?"
             private: no
   tasks:
-          - name: copy SchoolLab file from local to ubuntu machine
+          - name: check if file exists
+            stat:
+                    path: "'{{destination }}'/'{{ file }}'"
+            register: file_exists
+            
+          - name: copy file 
+            become: false
             copy:
-                    src: "{{ file }}"
-                    dest: "{{ transfer }}"
-
-          - name: pause 10 seconds
-            pause:
-                    seconds: 10
-   
+                    src: "{{ file_directory }}/{{ file }}"
+                    dest: "{{ destination }}"
+            when: file_exists.stat.exists == false

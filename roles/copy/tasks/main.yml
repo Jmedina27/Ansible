@@ -2,21 +2,21 @@
 # tasks file for roles/copy
 #
 #
-#Check if the file exists on the Linux Servers
+############## Checking if File Exist  #####################
 - name: Checking to see if the file exists
   stat:
-          path: "'{{ destination }}'/'{{ file }}''"
+          path: "'{{ destination }}'/'{{ file }}'"
   when:
-          - ansible_distribution == "Ubuntu" or ansible_distribution == "Fedora" or ansible_distribution == "CentOS"
+          - ansible_distribution == "Ubuntu" or ansible_distribution == "Fedora" or ansible_distribution == "CentOS" or ansible_distribution == "MacOSX"
   register: file_exists
 
-#If the file does not exist, then copy the file to the Linux servers
+############## Copying Files to Linux Machines  #####################
 - name: copy Desired files from the local machine to the Remote Machin
   become: false
   copy:
           src: "{{ file_directory }}/{{ file }}"
           dest: "{{ destination }}"
   when:
-          - ansible_distribution == "Ubuntu" or ansible_distribution == "Fedora" or ansible_distribution == "CentOS"
+          - ansible_distribution == "Ubuntu" or ansible_distribution == "Fedora" or ansible_distribution == "CentOS" or ansible_distribution = "MacOSX"
           - file_exists.stat.exists == False
 

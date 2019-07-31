@@ -1,6 +1,6 @@
 ---
 # tasks file for roles/user
-
+############## Creating Sudo Users ######################
 - name: add user to  sudo group 
   become: True
   user:
@@ -13,6 +13,7 @@
   with_items: "{{ users }}"
   when: ansible_distribution == "Ubuntu" or ansible_distribution == "CentOS" or ansible_distribution == "Fedora"
 
+##############  Enable Passwordless Sudo  #####################
 - name: add passwordless sudo to users
   become: true
   lineinfile: 

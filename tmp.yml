@@ -1,0 +1,15 @@
+---
+- name: install packages
+  hosts: ubuntu
+  become: True
+  vars:
+          packages:
+                  - vim
+                  - git
+                  - g++
+                  - tree
+  tasks:
+          - name: install packages 
+            apt: name={{ item }} state=installed update_cache=true
+            with_items:
+                    - "{{ packages }}"

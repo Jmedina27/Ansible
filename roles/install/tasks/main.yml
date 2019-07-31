@@ -32,7 +32,7 @@
   apt: name={{ item }} state=installed
   with_items: "{{ default_package }}"
   when:
-          - ansible_distribution == "Ubuntu"
+          - ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
           - packages == '1'
 
 ############### Fedora Machine #####################
@@ -62,6 +62,6 @@
   yum: name={{ item }} state=installed update_cache=True
   with_items: "{{ default_package }}"
   when:
-          - ansible_distribution == "CentOS"
+          - ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Linux Enterprise"
           - packages == '1'
 

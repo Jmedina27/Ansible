@@ -4,4 +4,4 @@ users:
       - test1
       - test2
 password:
-      - '$6$3y6GeCS82bQulk1B$ziHychrcfbLnAT3T5Te1neVcgmTPy3bZSXt8BP/ZL0BqrkoGVdCA9Tsa04Ila/p11WDV/J31slUqMeJ4TqbHK/'
+      - \$6$aWiocYe4f/PMsec1$1rcwcL.3Y3MhwPdfbxyCRLvDSc35jXD1EC9WTrNGesG96ZVPOCpxjTWR.06medvhVgeyNp25hiDSgwXm5kVZx1
