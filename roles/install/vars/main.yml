@@ -11,3 +11,4 @@ default_package:
         - git
         - whois
         - wget
+        - nmap

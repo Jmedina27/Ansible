@@ -25,6 +25,6 @@
   roles:
           - install
           - update
-          - copy
-          - sudo
-          - user
+            #- copy
+            # sudo
+            #user

@@ -1,0 +1,6 @@
+- name: setup hadrian
+  hosts: local
+  become: true
+  roles:
+          - setup
+
